@@ -1,16 +1,35 @@
 FROM ubuntu:20.04
 
+ARG cnb_uid=1000
+ARG cnb_gid=1000
+ARG stack_id="ofnee"
+
 ENV HTTP_PROXY=$HTTP_PROXY \
-    HTTPS_PROXY=$HTTPS_PROXY \
+    HTTPS_PROXY=$HTTPS_PROXY
 
 # RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list && \
 #     apt-get update && \
 #     apt-get install -y curl && \
 #     rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && \
-    apt-get install -y curl && \
-    rm -rf /var/lib/apt/lists/*
+RUN sed -i s@/ports.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list && \
+    apt-get update -y && apt-get install -y --no-install-recommends \
+    libexpat1 \
+    libffi7 \
+    libmpdec2 \
+    libicu66 \
+    libc++1-9 \
+    tzdata \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /workspace
+
+LABEL io.buildpacks.stack.id=${stack_id}
+
+RUN groupadd cnb --gid ${cnb_gid} && \
+  useradd --uid ${cnb_uid} --gid ${cnb_gid} -m -s /bin/bash cnb
+
+ENV CNB_USER_ID=${cnb_uid}
+ENV CNB_GROUP_ID=${cnb_gid}
+ENV CNB_STACK_ID=${stack_id}
