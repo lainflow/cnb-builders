@@ -54,21 +54,20 @@ class FunctionContext():
         self.app.run(self.port)" > function_framework.py
 
 # Create the user function with the function name
+mkdir -p app
+touch app/__init__.py
+mv app.py app/app.py
+# sed -i 's/from function_framework import FunctionContext/from .function_framework import FunctionContext/g' app/app.py
 echo -e "\n\nif __name__ == '__main__':
     fc = FunctionContext(\"$FUNCTION_NAME\", 50051)
     fc.load_user_function(user_function)
-    fc.run()" >> app.py
+    fc.run()" >> app/app.py
 
 # Write the launch.toml file
 cat > "$CNB_LAYERS_DIR/launch.toml" << EOL
 # our web process
 [[processes]]
 type = "web"
-command = "source $PYTHON_LAYER/venv/bin/activate && python app.py"
+command = "source $PYTHON_LAYER/venv/bin/activate && PYTHONPATH=$PWD python app/app.py"
 default = true
-
-# our worker process
-[[processes]]
-type = "worker"
-command = "bundle exec ruby worker.rb"
 EOL
