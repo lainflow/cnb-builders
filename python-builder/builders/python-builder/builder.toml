@@ -1,0 +1,20 @@
+# Buildpacks to include in builder
+[[buildpacks]]
+id = "lainflow.io/python-functionframework"
+version = "1.0"
+uri = "../../buildpacks/python-function-framework"
+
+# Order used for detection
+[[order]]
+    # This buildpack will display build-time information (as a dependency)
+    [[order.group]]
+    id = "lainflow.io/python-functionframework"
+    version = "1.0"
+
+# Stack that will be used by the builder
+[stack]
+id = "io.lainflow.stack.focal"
+# This image is used at runtime
+run-image = "ofnee-stack-run:0.1.0"
+# This image is used at build-time
+build-image = "ofnee-stack-build:0.1.0"

@@ -1,9 +1,9 @@
 api = "0.8"
 
 [buildpack]
-  id = "lainflow.io/python"
+  id = "lainflow.io/python-functionframework"
   version = "1.0"
-  name = "Python - python"
+  name = "Python - functionframework"
 
 [[stacks]]
   id = "io.lainflow.stack.focal"

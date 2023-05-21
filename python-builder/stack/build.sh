@@ -4,6 +4,7 @@ set -euo pipefail
 
 # Set variables
 STACK_NAME="ofnee-stack"
+STACK_ID="io.lainflow.stack.focal"
 BASE_IMAGE="${STACK_NAME}-base"
 STACK_VERSION="0.1.0"
 RUN_IMAGE_NAME="${STACK_NAME}-run"
@@ -17,6 +18,7 @@ docker build \
   -t ${BASE_IMAGE}:${STACK_VERSION} \
   -f Dockerfile.base \
   --build-arg BASE_IMAGE=${BASE_IMAGE} \
+  --build-arg stack_id=${STACK_ID} \
   --build-arg HTTP_PROXY=${HTTP_PROXY:-} \
   --build-arg HTTPS_PROXY=${HTTPS_PROXY:-} \
   --network host \
