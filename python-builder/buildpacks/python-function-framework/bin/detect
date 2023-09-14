@@ -12,4 +12,9 @@ if [ ! -f /workspace/requirements.txt ]; then
   exit 1
 fi
 
+if grep -q "ofn-functions-framework" /workspace/requirements.txt; then
+  echo "ERROR: requirements.txt dosen't contain ofn-functions-framework"
+  exit 1
+fi
+
 exit 0
