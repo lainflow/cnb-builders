@@ -32,7 +32,7 @@ echo -e "[types]\nlaunch = true" > "$PYTHON_LAYER.toml"
 # Create the user function with the function name
 mkdir -p app
 touch app/__init__.py
-mv "$FUNCTION_SOURCE" "app/$FUNCTION_TARGET.py"
+mv "$FUNCTION_SOURCE" "app/$FUNCTION_SOURCE"
 
 # Write the launch.toml file
 cat > "$CNB_LAYERS_DIR/launch.toml" << EOL
